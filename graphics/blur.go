@@ -13,9 +13,12 @@ import (
 	"github.com/grokify/graphics-go/graphics/convolve"
 )
 
-// DefaultStdDev is the default blurring parameter.
-const DefaultStdDev = 0.5
-const DefaultSize = 0
+const (
+	// DefaultStdDev is a default blurring parameter.
+	DefaultStdDev = 0.5
+	// DefaultSize is a default blurring parameter.
+	DefaultSize = 0
+)
 
 // blurOptions are the blurring parameters.
 // StdDev is the standard deviation of the normal, higher is blurrier.
