@@ -29,9 +29,9 @@ type blurOptions struct {
 }
 
 // Blur produces a blurred version of the image, using a Gaussian blur.
-// `stdDev`` is the standard deviation of the normal, higher is blurrier.
+// `stdDev` is the standard deviation of the normal, higher is blurrier.
 // For default value, use `DefaultStdDev` or `0.5`.
-// `size`` is the size of the kernel. If zero, it is set to Ceil(6 * StdDev).
+// `size` is the size of the kernel. If zero, it is set to Ceil(6 * StdDev).
 func Blur(dst draw.Image, src image.Image, stdDev float64, size int) error {
 	if dst == nil {
 		return errors.New("graphics: dst is nil")
