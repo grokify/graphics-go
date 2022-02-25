@@ -12,24 +12,19 @@ import (
 	"github.com/grokify/graphics-go/graphics/interp"
 )
 
-// RotateOptions are the rotation parameters.
+// rotateOptions are the rotation parameters.
 // Angle is the angle, in radians, to rotate the image clockwise.
-type RotateOptions struct {
+type rotateOptions struct {
 	Angle float64
 }
 
 // Rotate produces a rotated version of src, drawn onto dst.
-func Rotate(dst draw.Image, src image.Image, opt *RotateOptions) error {
+func Rotate(dst draw.Image, src image.Image, angle float64) error {
 	if dst == nil {
 		return errors.New("graphics: dst is nil")
 	}
 	if src == nil {
 		return errors.New("graphics: src is nil")
-	}
-
-	angle := 0.0
-	if opt != nil {
-		angle = opt.Angle
 	}
 
 	return I.Rotate(angle).TransformCenter(dst, src, interp.Bilinear)

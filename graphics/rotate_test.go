@@ -16,25 +16,25 @@ import (
 var rotateOneColorTests = []transformOneColorTest{
 	{
 		"onepixel-onequarter", 1, 1, 1, 1,
-		&RotateOptions{math.Pi / 2},
+		&rotateOptions{math.Pi / 2},
 		[]uint8{0xff},
 		[]uint8{0xff},
 	},
 	{
 		"onepixel-partial", 1, 1, 1, 1,
-		&RotateOptions{math.Pi * 2.0 / 3.0},
+		&rotateOptions{math.Pi * 2.0 / 3.0},
 		[]uint8{0xff},
 		[]uint8{0xff},
 	},
 	{
 		"onepixel-complete", 1, 1, 1, 1,
-		&RotateOptions{2 * math.Pi},
+		&rotateOptions{2 * math.Pi},
 		[]uint8{0xff},
 		[]uint8{0xff},
 	},
 	{
 		"even-onequarter", 2, 2, 2, 2,
-		&RotateOptions{math.Pi / 2.0},
+		&rotateOptions{math.Pi / 2.0},
 		[]uint8{
 			0xff, 0x00,
 			0x00, 0xff,
@@ -46,7 +46,7 @@ var rotateOneColorTests = []transformOneColorTest{
 	},
 	{
 		"even-complete", 2, 2, 2, 2,
-		&RotateOptions{2.0 * math.Pi},
+		&rotateOptions{2.0 * math.Pi},
 		[]uint8{
 			0xff, 0x00,
 			0x00, 0xff,
@@ -58,7 +58,7 @@ var rotateOneColorTests = []transformOneColorTest{
 	},
 	{
 		"line-partial", 3, 3, 3, 3,
-		&RotateOptions{math.Pi * 1.0 / 3.0},
+		&rotateOptions{math.Pi * 1.0 / 3.0},
 		[]uint8{
 			0x00, 0x00, 0x00,
 			0xff, 0xff, 0xff,
@@ -72,7 +72,7 @@ var rotateOneColorTests = []transformOneColorTest{
 	},
 	{
 		"line-offset-partial", 3, 3, 3, 3,
-		&RotateOptions{math.Pi * 3 / 2},
+		&rotateOptions{math.Pi * 3 / 2},
 		[]uint8{
 			0x00, 0x00, 0x00,
 			0x00, 0xff, 0xff,
@@ -86,7 +86,7 @@ var rotateOneColorTests = []transformOneColorTest{
 	},
 	{
 		"dot-partial", 4, 4, 4, 4,
-		&RotateOptions{math.Pi},
+		&rotateOptions{math.Pi},
 		[]uint8{
 			0x00, 0x00, 0x00, 0x00,
 			0x00, 0xff, 0x00, 0x00,
@@ -107,7 +107,7 @@ func TestRotateOneColor(t *testing.T) {
 		src := oc.newSrc()
 		dst := oc.newDst()
 
-		if err := Rotate(dst, src, oc.opt.(*RotateOptions)); err != nil {
+		if err := Rotate(dst, src, oc.opt.(*rotateOptions).Angle); err != nil {
 			t.Errorf("rotate %s: %v", oc.desc, err)
 			continue
 		}
@@ -119,7 +119,7 @@ func TestRotateOneColor(t *testing.T) {
 
 func TestRotateEmpty(t *testing.T) {
 	empty := image.NewRGBA(image.Rect(0, 0, 0, 0))
-	if err := Rotate(empty, empty, nil); err != nil {
+	if err := Rotate(empty, empty, 0.0); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -132,7 +132,7 @@ func TestRotateGopherSide(t *testing.T) {
 
 	srcb := src.Bounds()
 	dst := image.NewRGBA(image.Rect(0, 0, srcb.Dy(), srcb.Dx()))
-	if err := Rotate(dst, src, &RotateOptions{math.Pi / 2.0}); err != nil {
+	if err := Rotate(dst, src, math.Pi/2.0); err != nil {
 		t.Fatal(err)
 	}
 
@@ -154,7 +154,7 @@ func TestRotateGopherPartial(t *testing.T) {
 
 	srcb := src.Bounds()
 	dst := image.NewRGBA(image.Rect(0, 0, srcb.Dx(), srcb.Dy()))
-	if err := Rotate(dst, src, &RotateOptions{math.Pi / 3.0}); err != nil {
+	if err := Rotate(dst, src, math.Pi/3.0); err != nil {
 		t.Fatal(err)
 	}
 
