@@ -5,11 +5,11 @@
 package graphics
 
 import (
-	"github.com/BurntSushi/graphics-go/graphics/graphicstest"
 	"image"
+	_ "image/png"
 	"testing"
 
-	_ "image/png"
+	"github.com/grokify/graphics-go/graphics/graphicstest"
 )
 
 func TestThumbnailGopher(t *testing.T) {

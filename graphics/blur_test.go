@@ -5,12 +5,12 @@
 package graphics
 
 import (
-	"github.com/BurntSushi/graphics-go/graphics/graphicstest"
 	"image"
 	"image/color"
+	_ "image/png"
 	"testing"
 
-	_ "image/png"
+	"github.com/grokify/graphics-go/graphics/graphicstest"
 )
 
 var blurOneColorTests = []transformOneColorTest{

@@ -5,10 +5,11 @@
 package graphics
 
 import (
-	"github.com/BurntSushi/graphics-go/graphics/interp"
 	"errors"
 	"image"
 	"image/draw"
+
+	"github.com/grokify/graphics-go/graphics/interp"
 )
 
 // Scale produces a scaled version of the image using bilinear interpolation.
