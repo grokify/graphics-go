@@ -8,11 +8,9 @@
 
 This is a Graphics library for the Go programming language.
 
-This code is hard forked from the following repo via [BurntSushi](https://github.com/BurntSushi/graphics-go).
+This code is originally forked from the following Google repo via [BurntSushi](https://github.com/BurntSushi/graphics-go).
 
 https://code.google.com/archive/p/graphics-go/
-
-As of Feb 24, 2022, the last commit to this repo is from Sep 13, 2012.
 
 ## Installation
 
