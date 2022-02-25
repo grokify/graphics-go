@@ -14,18 +14,22 @@ import (
 )
 
 // DefaultStdDev is the default blurring parameter.
-var DefaultStdDev = 0.5
+const DefaultStdDev = 0.5
+const DefaultSize = 0
 
-// BlurOptions are the blurring parameters.
+// blurOptions are the blurring parameters.
 // StdDev is the standard deviation of the normal, higher is blurrier.
 // Size is the size of the kernel. If zero, it is set to Ceil(6 * StdDev).
-type BlurOptions struct {
+type blurOptions struct {
 	StdDev float64
 	Size   int
 }
 
 // Blur produces a blurred version of the image, using a Gaussian blur.
-func Blur(dst draw.Image, src image.Image, opt *BlurOptions) error {
+// `stdDev`` is the standard deviation of the normal, higher is blurrier.
+// For default value, use `DefaultStdDev` or `0.5`.
+// `size`` is the size of the kernel. If zero, it is set to Ceil(6 * StdDev).
+func Blur(dst draw.Image, src image.Image, stdDev float64, size int) error {
 	if dst == nil {
 		return errors.New("graphics: dst is nil")
 	}
@@ -33,21 +37,13 @@ func Blur(dst draw.Image, src image.Image, opt *BlurOptions) error {
 		return errors.New("graphics: src is nil")
 	}
 
-	sd := DefaultStdDev
-	size := 0
-
-	if opt != nil {
-		sd = opt.StdDev
-		size = opt.Size
-	}
-
 	if size < 1 {
-		size = int(math.Ceil(sd * 6))
+		size = int(math.Ceil(stdDev * 6))
 	}
 
 	kernel := make([]float64, 2*size+1)
 	for i := 0; i <= size; i++ {
-		x := float64(i) / sd
+		x := float64(i) / stdDev
 		x = math.Pow(1/math.SqrtE, x*x)
 		kernel[size-i] = x
 		kernel[size+i] = x

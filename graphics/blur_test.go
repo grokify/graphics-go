@@ -16,19 +16,19 @@ import (
 var blurOneColorTests = []transformOneColorTest{
 	{
 		"1x1-blank", 1, 1, 1, 1,
-		&BlurOptions{0.83, 1},
+		&blurOptions{0.83, 1},
 		[]uint8{0xff},
 		[]uint8{0xff},
 	},
 	{
 		"1x1-spreadblank", 1, 1, 1, 1,
-		&BlurOptions{0.83, 2},
+		&blurOptions{0.83, 2},
 		[]uint8{0xff},
 		[]uint8{0xff},
 	},
 	{
 		"3x3-blank", 3, 3, 3, 3,
-		&BlurOptions{0.83, 2},
+		&blurOptions{0.83, 2},
 		[]uint8{
 			0xff, 0xff, 0xff,
 			0xff, 0xff, 0xff,
@@ -42,7 +42,7 @@ var blurOneColorTests = []transformOneColorTest{
 	},
 	{
 		"3x3-dot", 3, 3, 3, 3,
-		&BlurOptions{0.34, 1},
+		&blurOptions{0.34, 1},
 		[]uint8{
 			0x00, 0x00, 0x00,
 			0x00, 0xff, 0x00,
@@ -56,7 +56,7 @@ var blurOneColorTests = []transformOneColorTest{
 	},
 	{
 		"5x5-dot", 5, 5, 5, 5,
-		&BlurOptions{0.34, 1},
+		&blurOptions{0.34, 1},
 		[]uint8{
 			0x00, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x00, 0x00,
@@ -74,7 +74,7 @@ var blurOneColorTests = []transformOneColorTest{
 	},
 	{
 		"5x5-dot-spread", 5, 5, 5, 5,
-		&BlurOptions{0.85, 1},
+		&blurOptions{0.85, 1},
 		[]uint8{
 			0x00, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x00, 0x00,
@@ -92,7 +92,7 @@ var blurOneColorTests = []transformOneColorTest{
 	},
 	{
 		"4x4-box", 4, 4, 4, 4,
-		&BlurOptions{0.34, 1},
+		&blurOptions{0.34, 1},
 		[]uint8{
 			0x00, 0x00, 0x00, 0x00,
 			0x00, 0xff, 0xff, 0x00,
@@ -108,7 +108,7 @@ var blurOneColorTests = []transformOneColorTest{
 	},
 	{
 		"5x5-twodots", 5, 5, 5, 5,
-		&BlurOptions{0.34, 1},
+		&blurOptions{0.34, 1},
 		[]uint8{
 			0x00, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x00, 0x00,
@@ -130,8 +130,8 @@ func TestBlurOneColor(t *testing.T) {
 	for _, oc := range blurOneColorTests {
 		dst := oc.newDst()
 		src := oc.newSrc()
-		opt := oc.opt.(*BlurOptions)
-		if err := Blur(dst, src, opt); err != nil {
+		opt := oc.opt.(*blurOptions)
+		if err := Blur(dst, src, opt.StdDev, opt.Size); err != nil {
 			t.Fatal(err)
 		}
 
@@ -143,7 +143,7 @@ func TestBlurOneColor(t *testing.T) {
 
 func TestBlurEmpty(t *testing.T) {
 	empty := image.NewRGBA(image.Rect(0, 0, 0, 0))
-	if err := Blur(empty, empty, nil); err != nil {
+	if err := Blur(empty, empty, DefaultStdDev, DefaultSize); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -155,7 +155,7 @@ func TestBlurGopher(t *testing.T) {
 	}
 
 	dst := image.NewRGBA(src.Bounds())
-	if err = Blur(dst, src, &BlurOptions{StdDev: 1.1}); err != nil {
+	if err = Blur(dst, src, 1.1, DefaultSize); err != nil {
 		t.Fatal(err)
 	}
 
@@ -188,7 +188,7 @@ func benchBlur(b *testing.B, bounds image.Rectangle) {
 
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
-		Blur(dst, src, &BlurOptions{0.84, 3})
+		Blur(dst, src, 0.84, 3)
 	}
 }
 
