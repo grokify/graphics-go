@@ -12,6 +12,8 @@ This code is hard forked from the following repo via [BurntSushi](https://github
 
 https://code.google.com/archive/p/graphics-go/
 
+As of Feb 24, 2022, the last commit to this repo is from Sep 13, 2012.
+
 Unless otherwise noted, the graphics-go source files are distributed
 under the BSD-style license found in the LICENSE file.
 
