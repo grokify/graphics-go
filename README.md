@@ -10,7 +10,7 @@ This is a Graphics library for the Go programming language.
 
 ## Background
 
-This code is originally forked from [`code.google.com/p/graphics-go`](https://code.google.com/archive/p/graphics-go/) which was first forked to [`github.com/BurntSushi/graphics-go`](https://github.com/BurntSushi/graphics-go). Both repos appear inactive.
+This code is originally forked from [`code.google.com/p/graphics-go`](https://code.google.com/archive/p/graphics-go/) which was first exported to [`github.com/BurntSushi/graphics-go`](https://github.com/BurntSushi/graphics-go). Both repos appear inactive.
 
 Reasons this was created include:
 
