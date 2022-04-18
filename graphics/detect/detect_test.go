@@ -41,8 +41,8 @@ var (
 func TestClassifier(t *testing.T) {
 	m := image.NewGray(image.Rect(0, 0, 20, 20))
 	b := m.Bounds()
-	draw.Draw(m, image.Rect(0, 0, 20, 20), image.White, image.ZP, draw.Src)
-	draw.Draw(m, image.Rect(3, 4, 4, 5), image.Black, image.ZP, draw.Src)
+	draw.Draw(m, image.Rect(0, 0, 20, 20), image.White, image.Point{}, draw.Src)
+	draw.Draw(m, image.Rect(3, 4, 4, 5), image.Black, image.Point{}, draw.Src)
 	w := newWindow(m)
 	pr := newProjector(b, b)
 
