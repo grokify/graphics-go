@@ -19,6 +19,7 @@ type rotateOptions struct {
 }
 
 // Rotate produces a rotated version of src, drawn onto dst.
+// `angle` is in radians, to rotate the image clockwise.
 func Rotate(dst draw.Image, src image.Image, angle float64) error {
 	if dst == nil {
 		return errors.New("graphics: dst is nil")
